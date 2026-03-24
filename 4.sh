@@ -29,12 +29,10 @@ echo "==== hello world ===="
 echo "==== hello world ====" >&2
 srun --mpi=pmix ./hello
 
-
 echo "==== pingpong ===="
-echo "==== pingping ====" >&2
-#srun --mpi=pmix ./pingpong
-mpiexec -n 4 ./pingpong
+echo "==== pingpong ====" >&2
+srun --mpi=pmix ./pingpong
 
-echo "==== cuda memtest ===="
-echo "==== cuda memtest ====" >&2
+echo "==== end ===="
+echo "==== end ====" >&2
 
