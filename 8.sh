@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #SBATCH --partition=gpu-v100 
 #SBATCH --time=1:00:00
 

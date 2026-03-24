@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #SBATCH --partition=gpu-v100 
 #SBATCH --time=1:00:00
 
@@ -30,7 +32,8 @@ srun --mpi=pmix ./hello
 
 echo "==== pingpong ===="
 echo "==== pingping ====" >&2
-srun --mpi=pmix ./pingpong
+#srun --mpi=pmix ./pingpong
+mpiexec -n 4 ./pingpong
 
 echo "==== cuda memtest ===="
 echo "==== cuda memtest ====" >&2
