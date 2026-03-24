@@ -12,8 +12,8 @@ mpic++ hello.cpp -o hello
 mpic++ pingpong.cpp -o pingpong
 
 # single gpu-v100 node
-sbatch 4.cfg
+sbatch 4.sh
 
 # 2 gpu-v100 nodes
-sbatch 8.cfg
+sbatch 8.sh
 ```
