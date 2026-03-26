@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 {
     MPI_Init(&argc, &argv);
 
-    int rank,size;
+    int rank, size;
     MPI_Comm_size(MPI_COMM_WORLD, &size);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
@@ -21,8 +21,11 @@ int main(int argc, char *argv[])
        even ranks start sending
        odd ranks start reveiving
     */
-    int next_rank = (rank + 1) % size;
-    int prev_rank = (rank -1 + size) % size;
+    const int next_rank = (rank + 1) % size;
+    const int prev_rank = (rank -1 + size) % size;
+
+    const int id_send = size * rank + next_rank;
+    const int id_recv = size * prev_rank + rank;
 
     int count = 10000;
     double start_time, end_time, elapsed_time;
@@ -46,13 +49,13 @@ int main(int argc, char *argv[])
         {
             if(rank % 2 == 0)
             {
-                MPI_Send(send.data(), message_size, MPI_CHAR, next_rank, 999, MPI_COMM_WORLD);
-                MPI_Recv(recv.data(), message_size, MPI_CHAR, prev_rank, 999, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                MPI_Send(send.data(), message_size, MPI_CHAR, next_rank, id_send, MPI_COMM_WORLD);
+                MPI_Recv(recv.data(), message_size, MPI_CHAR, prev_rank, id_recv, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
             }
             else
             {
-                MPI_Recv(recv.data(), message_size, MPI_CHAR, prev_rank, 999, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-                MPI_Send(send.data(), message_size, MPI_CHAR, next_rank, 999, MPI_COMM_WORLD);
+                MPI_Recv(recv.data(), message_size, MPI_CHAR, prev_rank, id_recv, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                MPI_Send(send.data(), message_size, MPI_CHAR, next_rank, id_send, MPI_COMM_WORLD);
             }
         }
 
@@ -61,13 +64,13 @@ int main(int argc, char *argv[])
         {
             if(rank == 0)
             {
-                MPI_Send(send.data(), message_size, MPI_CHAR, next_rank, 999, MPI_COMM_WORLD);
-                MPI_Recv(recv.data(), message_size, MPI_CHAR, prev_rank, 999, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                MPI_Send(send.data(), message_size, MPI_CHAR, next_rank, id_send, MPI_COMM_WORLD);
+                MPI_Recv(recv.data(), message_size, MPI_CHAR, prev_rank, id_recv, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
             }
             else
             {
-                MPI_Recv(recv.data(), message_size, MPI_CHAR, prev_rank, 999, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-                MPI_Send(send.data(), message_size, MPI_CHAR, next_rank, 999, MPI_COMM_WORLD);
+                MPI_Recv(recv.data(), message_size, MPI_CHAR, prev_rank, id_recv, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                MPI_Send(send.data(), message_size, MPI_CHAR, next_rank, id_send, MPI_COMM_WORLD);
             }
         }
         end_time = MPI_Wtime();
