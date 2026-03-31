@@ -18,12 +18,22 @@ export EDITOR="emacs -nw"
 module purge
 module load volta
 module load emacs
-module load GCC/12.3.0
-module load GCCcore/12.3.0
-module load cuda/12.8
-module load libfabric/1.18.0-GCCcore-12.3.0
-module load UCX/1.14.1-GCCcore-12.3.0
-module load OpenMPI/4.1.5-GCC-12.3.0
+
+# from Varun
+ml use /data/rosi/shared/eb/easybuild/volta/modules/all/Core/*
+ml NVHPC/22.7-CUDA-11.7.0
+ml OpenMPI/4.1.4
+
+export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+export OMPI_MCA_pml=ucx
+export OMPI_MCA_btl=self,smcuda,vader
+
+#module load GCC/12.3.0
+#module load GCCcore/12.3.0
+#module load cuda/12.8
+#module load libfabric/1.18.0-GCCcore-12.3.0
+#module load UCX/1.14.1-GCCcore-12.3.0
+#module load OpenMPI/4.1.5-GCC-12.3.0
 module load python/3.14.2
 module load cmake/4.0.3
 module load zlib/1.2.13-GCCcore-12.3.0

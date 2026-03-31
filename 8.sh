@@ -18,7 +18,7 @@
 #SBATCH -e 8_stderr
 
 
-export OMPI_MCA_pml=ob1
+export OMPI_MCA_pml=ucx
 export OMPI_MCA_btl=self,smcuda,vader
 
 echo "==== hostname ===="
@@ -27,12 +27,15 @@ srun --mpi=pmix hostname
 
 echo "==== hello world ===="
 echo "==== hello world ====" >&2
-srun --mpi=pmix ./hello
-
+#srun --mpi=pmix ./hello
+srun --mpi=pmix_v4 ./hello
 
 echo "==== pingpong ===="
 echo "==== pingpong ====" >&2
-srun --mpi=pmix ./pingpong
+#srun --mpi=pmix ./pingpong
+#mpirun -mca pml ucx -mca btl '^uct,ofi' -mca mtl '^ofi' -bind-to core --map-by core -n 8 ./pingpong
+#mpirun --cpu-bind-=core -n 8 ./pingpong
+srun --mpi=pmix_v4 ./pingpong
 
 echo "==== end ===="
 echo "==== end ====" >&2
