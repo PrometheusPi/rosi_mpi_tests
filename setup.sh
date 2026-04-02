@@ -21,10 +21,10 @@ module load emacs
 
 # from Varun
 ml use /data/rosi/shared/eb/easybuild/volta/modules/all/Core/*
-ml NVHPC/22.7-CUDA-11.7.0
-ml OpenMPI/4.1.4
+ml nvidia-compilers/25.1-CUDA-12.6.0
+ml OpenMPI/5.0.3
 
-export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/data/rosi/shared/eb/easybuild/volta/software/GCCcore/13.3.0/lib64:$LD_LIBRARY_PATH
 export OMPI_MCA_pml=ucx
 export OMPI_MCA_btl=self,smcuda,vader
 
